@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Événements{% endblock %}
+
+{% block body %}
+<h1>Liste des événements</h1>
+
+<form method="get" class="filters">
+    <label>
+        Trier par :
+        <select name="order" onchange="this.form.submit()">
+            <option value="asc" {% if order == 'asc' %}selected{% endif %}>A → Z</option>
+            <option value="desc" {% if order == 'desc' %}selected{% endif %}>Z → A</option>
+        </select>
+    </label>
+
+    {% if app.user %}
+        <label>
+            <input type="checkbox" name="mes_avis" value="1" {% if mesAvis %}checked{% endif %} onchange="this.form.submit()">
+            Afficher uniquement mes avis
+        </label>
+        <label>
+            <input type="checkbox" name="sans_avis" value="1" {% if sansAvis %}checked{% endif %} onchange="this.form.submit()">
+            Afficher uniquement événements sans mes avis
+        </label>
+    {% endif %}
+</form>
+
+<ul class="evenements-list">
+    {% for evenement in evenements %}
+        {% set monAvis = null %}
+        {% if app.user %}
+            {% for a in evenement.aE %}
+                {% if a.aU == app.user %}
+                    {% set monAvis = a %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        {# Filtrage des événements selon les checkboxes #}
+        {% set afficher = true %}
+        {% if mesAvis and monAvis is null %}
+            {% set afficher = false %}
+        {% endif %}
+        {% if sansAvis and monAvis is not null %}
+            {% set afficher = false %}
+        {% endif %}
+
+        {% if afficher %}
+            <li class="evenement-item">
+                <h2>{{ evenement.titre }}</h2>
+
+                {% if app.user %}
+                    {% if monAvis %}
+                        <p>
+                            <strong>Votre avis :</strong> Note: {{ monAvis.note }} - Commentaire: {{ monAvis.commentaire }}
+                            {% if not monAvis.accepter %}
+                                <span class="avis-en-attente">(Votre avis n'est pas encore validé)</span>
+                            {% endif %}
+                        </p>
+                        <a href="{{ path('app_evenement_show', {'id': evenement.id}) }}">Voir l'évènement</a>
+                        <a href="{{ path('app_evenement_show', {'id': evenement.id}) }}#edit">Modifier votre avis</a>
+                    {% else %}
+                        <a href="{{ path('app_evenement_show', {'id': evenement.id}) }}">Voir l'évènement</a>
+                        <a href="{{ path('app_evenement_show', {'id': evenement.id}) }}#edit">Ajouter un avis</a>
+                    {% endif %}
+                {% else %}
+                    <a href="{{ path('app_evenement_show', {'id': evenement.id}) }}">Voir l'évènement</a>
+                {% endif %}
+            </li>
+        {% endif %}
+    {% else %}
+        <li>Aucun événement trouvé</li>
+    {% endfor %}
+</ul>
+
+<style>
+.evenements-list { list-style: none; padding: 0; }
+.evenement-item { padding: 1rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 8px; background-color: #f8f9fa; }
+.evenement-item h2 { margin: 0 0 0.5rem 0; }
+a { text-decoration: none; color: #004080; margin-right: 0.5rem; }
+a:hover { text-decoration: underline; }
+.avis-en-attente {
+    display: inline-block;
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 0.2rem 0.5rem;
+    border-radius: 5px;
+    margin-left: 0.5rem;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+.filters { margin-bottom: 1rem; }
+</style>
+{% endblock %}

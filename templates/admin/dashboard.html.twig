@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block body %}
+<h1>Dashboard Admin</h1>
+
+<h2>Utilisateurs</h2>
+<ul>
+    {% for u in users %}
+        <li>{{ u.email }} - Roles: {{ u.roles|join(', ') }}</li>
+    {% endfor %}
+</ul>
+
+<h2>Événements</h2>
+<ul>
+    {% for e in evenements %}
+        <li>{{ e.titre }}</li>
+    {% endfor %}
+</ul>
+
+<h2>Avis</h2>
+<ul>
+    {% for a in avis %}
+        <li>
+            {{ a.evenement.titre }} - {{ a.getAU().email }} : {{ a.note }} / {{ a.commentaire }} 
+            - {{ a.accepter ? 'Accepté' : 'Non validé' }}
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

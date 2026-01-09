@@ -1,0 +1,70 @@
+<nav class="navbar">
+    <div class="left">
+        <a href="{{ path('app_home') }}">Accueil</a>
+        <a href="{{ path('app_evenement_index') }}">Événements</a>
+        
+        {% if app.user and 'ROLE_ADMIN' in app.user.roles %}
+            <a href="{{ path('admin_dashboard') }}">Dashboard</a>
+        {% endif %}
+    </div>
+    
+    <div class="right">
+        {% if app.user %}
+            <div class="user-menu">
+                <button id="userButton">{{ app.user.email }}</button>
+                <div id="dropdown" class="dropdown-content">
+                    <p>Email : {{ app.user.email }}</p>
+                    <p>Role : {{ app.user.roles|join(', ') }}</p>
+                    <a href="{{ path('app_logout') }}">Logout</a>
+                </div>
+            </div>
+        {% else %}
+            <a href="{{ path('app_login') }}">Login</a>
+            <a href="{{ path('app_register') }}">Sign Up</a>
+        {% endif %}
+    </div>
+</nav>
+
+<style>
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: #004080; /* couleur principale */
+    color: white;
+}
+.navbar a { 
+    color: white; 
+    text-decoration: none; 
+    margin-right: 1rem; 
+    font-weight: bold;
+}
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+/* Dropdown */
+.user-menu { position: relative; display: inline-block; }
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #004080;  /* fond identique à la navbar pour contraste */
+    color: white;
+    min-width: 200px;
+    padding: 0.5rem;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+.user-menu:hover .dropdown-content {
+    display: block;
+}
+.dropdown-content a {
+    color: white;
+    display: block;
+    padding: 0.25rem 0;
+}
+.dropdown-content a:hover {
+    text-decoration: underline;
+}
+</style>

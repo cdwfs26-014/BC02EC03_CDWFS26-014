@@ -1,3 +1,157 @@
+/* --- Global --- */
 body {
-    background-color: skyblue;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e6f0fa; /* bleu très clair, doux */
+    color: #333; /* texte plus foncé pour lisibilité */
 }
+
+/* Container général */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+/* Liens */
+a {
+    color: #004080; /* bleu moyen */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4a90e2; /* bleu moyen doux */
+    padding: 1rem 2rem;
+    color: #fff;
+}
+
+.navbar .left a {
+    margin-right: 1.5rem;
+    font-weight: bold;
+}
+
+.navbar .right a, .navbar .right button {
+    margin-left: 1rem;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Dropdown user */
+.user-menu { position: relative; display: inline-block; }
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #fff;
+    color: #333;
+    min-width: 220px;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    z-index: 100;
+}
+.user-menu:hover .dropdown-content {
+    display: block;
+}
+.dropdown-content p, .dropdown-content a {
+    margin: 0.5rem 0;
+}
+.dropdown-content a {
+    color: #4a90e2;
+    font-weight: bold;
+}
+
+
+.home-header {
+    text-align: center;
+    margin: 3rem 0 2rem 0;
+}
+
+.home-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: #003366; /* bleu foncé pour contraste */
+}
+
+.home-header p {
+    font-size: 1.2rem;
+    color: #555; /* gris doux */
+}
+
+.prochains-evenements {
+    margin: 2rem auto;
+    max-width: 700px;
+    background-color: #ffffffcc; /* blanc semi-transparent */
+    color: #333;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+}
+
+.prochains-evenements ul {
+    list-style: none;
+    padding: 0;
+}
+
+.prochains-evenements li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #ddd;
+}
+
+
+form {
+    max-width: 400px;
+    margin: 2rem auto;
+    background-color: #ffffffcc; /* blanc translucide */
+    padding: 2rem;
+    border-radius: 10px;
+    color: #333;
+}
+
+form h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #003366;
+}
+
+form label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: bold;
+}
+
+form input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form button {
+    width: 100%;
+    padding: 0.7rem;
+    background-color: #4a90e2;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #357ABD;
+}
+
+

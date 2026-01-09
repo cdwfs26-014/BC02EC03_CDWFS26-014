@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier votre avis{% endblock %}
+
+{% block body %}
+<h1>Modifier votre avis pour "{{ evenement.titre }}"</h1>
+
+{{ form_start(avisForm) }}
+    {{ form_row(avisForm.note) }}
+    {{ form_row(avisForm.commentaire) }}
+    <button class="btn">Mettre à jour</button>
+{{ form_end(avisForm) }}
+
+{% if not avis.isAccepter() %}
+    <p><em>Votre avis n’est pas encore validé par un modérateur et seul vous pouvez le voir.</em></p>
+{% endif %}
+
+<a href="{{ path('app_evenement_index') }}">← Retour à la liste des événements</a>
+
+<style>
+form { margin-top: 1rem; }
+.btn { padding: 0.5rem 1rem; background-color: #004080; color: white; border: none; border-radius: 4px; cursor: pointer; }
+.btn:hover { background-color: #003366; }
+em { color: #555; font-style: italic; }
+</style>
+{% endblock %}

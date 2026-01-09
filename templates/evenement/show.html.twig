@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ evenement.titre }}{% endblock %}
+
+{% block body %}
+<h1>Informations détaillées</h1>
+<h2>{{ evenement.titre }}</h2>
+
+<h3>Avis</h3>
+<ul>
+    {% for a in avis %}
+        <li>
+            Note: {{ a.note }} - Commentaire: {{ a.commentaire }}
+            {% if a == monAvis %}
+                <em>(Ceci est votre avis)</em>
+                {% if not a.accepter %}
+                    <span class="avis-en-attente">(Votre avis n'est pas encore validé)</span>
+                {% endif %}
+            {% endif %}
+
+            {% if app.user and (is_granted('ROLE_ADMIN') or is_granted('ROLE_RESPONSABLE')) %}
+                <form action="{{ path('app_avis_moderate', {'id': a.id}) }}" method="get" style="display:inline-block; margin-left: 0.5rem;">
+                    <input type="hidden" name="accepter" value="{{ a.accepter ? 0 : 1 }}">
+                    <button type="submit" style="padding:0.2rem 0.5rem; font-size:0.85rem;">{{ a.accepter ? 'Refuser' : 'Accepter' }}</button>
+                </form>
+            {% endif %}
+        </li>
+    {% else %}
+        <li>Aucun avis</li>
+    {% endfor %}
+</ul>
+
+{% if app.user %}
+    <h3 id="edit">{{ monAvis ? 'Modifier votre avis' : 'Ajouter un avis' }}</h3>
+    {{ form_start(avisForm) }}
+        {{ form_widget(avisForm) }}
+        <button type="submit">{{ monAvis ? 'Modifier' : 'Ajouter' }}</button>
+    {{ form_end(avisForm) }}
+{% endif %}
+
+<style>
+.avis-en-attente {
+    display: inline-block;
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 0.2rem 0.5rem;
+    border-radius: 5px;
+    margin-left: 0.5rem;
+    font-weight: bold;
+}
+</style>
+{% endblock %}

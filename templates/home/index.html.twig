@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+<div class="home-header">
+    <h1>Relais & Châteaux - Réservations d'Événements</h1>
+    <p>Centralisez et gérez facilement vos événements privés et professionnels.</p>
+</div>
+
+<div class="prochains-evenements">
+    <h2>Prochains événements</h2>
+    <ul>
+        {% for evenement in evenements %}
+            <li>{{ evenement.titre }} - {{ evenement.aE|length }} avis</li>
+        {% else %}
+            <li>Aucun événement à venir.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<style>
+.home-header { text-align: center; margin: 2rem 0; }
+.prochains-evenements { margin: 2rem auto; max-width: 600px; }
+</style>
+{% endblock %}
