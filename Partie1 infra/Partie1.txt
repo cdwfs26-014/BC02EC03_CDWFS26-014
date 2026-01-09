@@ -1,0 +1,15 @@
+Impossibilité de se connecter en ssh qui est bloqué, et le partage de connexion me fait des siennes
+
+J'ai dû apt update et apt install openssh-server
+
+J'ai quand meme installé toutes les dépendances telles que php-cli ou nginx 
+
+Pour le pare feu, j'ai fait ces commandes : 
+-sudo ufw allow 22/tcp  
+-sudo ufw allow 80/tcp 
+-sudo ufw allow 443/tcp
+-sudo ufw enable
+ 
+Et j'ai modifier la config sshd pour modifier le port et désactiver le root
+
+Mais tout à la main à cause du ssh bloqué et je n'arrive pas à faire de screen
